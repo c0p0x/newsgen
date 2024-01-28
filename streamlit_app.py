@@ -159,9 +159,10 @@ def summarize_text(to_summarize_texts, openai_api_key):
     return summarized_texts_titles_urls
 
 class Document:
-    def __init__(self, title, text):
+    def __init__(self, title, text, metadata=None):
         self.title = title
         self.page_content = text
+        self.metadata = metadata if metadata is not None else {}
 def summarize_text_raw_text(raw_text, openai_api_key):
   
     document = Document('Dummy Title', raw_text)
