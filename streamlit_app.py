@@ -72,7 +72,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.5)
+    llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.68)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
