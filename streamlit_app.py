@@ -104,7 +104,13 @@ def summarize_text(to_summarize_texts, openai_api_key):
         LIST OF KEY FACTS IN POLISH:
         """
     )
-
+    full_prompt = PromptTemplate(
+        input_variables=["text"], 
+        template="""Make it shorter - for an fact-drive comprehensive article {text}
+        
+        LIST OF KEY FACTS IN POLISH:
+        """
+    )
 
     for to_summarize_text, url in to_summarize_texts:
         # Convert each text string to a Document object
@@ -132,7 +138,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         short_article = chain_prompt_text.run(summarized_text)
 
-        chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
+        chain_prompt_text = LLMChain(llm=llm, prompt=full_prompt)
         full_article = chain_prompt_text.run(desired_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
