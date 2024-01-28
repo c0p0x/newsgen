@@ -18,11 +18,9 @@ from langchain import PromptTemplate, LLMChain, OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-
-# Scrapes google search results
 def get_latest_results(query):
 
-    url = query
+    
     parsed_texts = [] #list to store parsed text and corresponding URL
     article_texts = []  # list to store original article texts for similarity comparison
 
@@ -33,7 +31,7 @@ def get_latest_results(query):
   
     try:
         #create an article object
-        article = Article(url)
+        article = Article(query)
 
         #download the article 
         article.download()
@@ -47,11 +45,11 @@ def get_latest_results(query):
             print(article.text)
               
         #Append tuple of splitted text and URL to the list
-        parsed_texts.append((splitted_texts, url))
+        parsed_texts.append((splitted_texts, query))
         article_texts.append(article.text)  # Add the text of the new unique article to the list
 
     except ArticleException: 
-        print(f"Failed to download and parse article: {url}")
+        print(f"Failed to download and parse article: {query}")
 
     return parsed_texts
 
@@ -72,7 +70,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # Define prompt that generates titles for summarized text
     prompt = PromptTemplate(
             input_variables=["text"], 
-            template="Write an appropriate, clickbaity news article title in less than 150 words for this text: {text}"
+            template="Write an appropriate, clickbaity news article title for approximatetly 150 words for this text: {text}"
         )
    
     for to_summarize_text, url in to_summarize_texts:
