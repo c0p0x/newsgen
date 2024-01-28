@@ -165,7 +165,7 @@ def main():
 
 
     #create text input field for keyword 
-    user_query = st.text_input("URL")
+    #user_query = st.text_input("URL")
 
     if st.button('Submit'):
         st.session_state.user_query = user_query
