@@ -74,7 +74,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = ChatOpenAI(model_name='gpt-4-0125-preview', openai_api_key=openai_api_key, temperature=0.68)
+    llm = ChatOpenAI(model_name='gpt-4-0125-preview', openai_api_key=openai_api_key, temperature=0.98)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
@@ -123,7 +123,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
 def main():
     #frontend
     st.title('AutoNewsletter')
-    st.markdown("## Please input your API keys")
 
     #create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
