@@ -18,24 +18,6 @@ from langchain import PromptTemplate, LLMChain, OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# checks if the fetched newsarticles are identical, and filters out the ones that are too similar
-def is_unique(new_article, articles):
-    if not articles:  # if the list is empty
-        return True
-
-    # Create a new TfidfVectorizer and transform the article texts into vectors
-    vectorizer = TfidfVectorizer().fit([new_article] + articles)
-    vectors = vectorizer.transform([new_article] + articles)
-
-    # Calculate the cosine similarity of the new article to each of the existing articles
-    similarity_scores = cosine_similarity(vectors[0:1], vectors[1:])
-
-    # If the highest similarity score is above a threshold (for example, 0.8), return False (not unique), keep at around 0.6
-    if np.max(similarity_scores) > 0.6:
-        return False
-
-    # Otherwise, return True (unique)
-    return True
 
 # Scrapes google search results
 def get_latest_results(query):
