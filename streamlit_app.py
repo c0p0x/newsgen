@@ -151,7 +151,7 @@ def main():
             st.write("No results found.")
         st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
         
-        for title, article, summarized_text, url in st.session_state.summarized_texts:
+        for title, article, facts, summarized_text, url in st.session_state.summarized_texts:
           st.markdown("## Suggested titles") 
           st.write(title)
           # Add the emoji before the summarized text
