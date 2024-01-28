@@ -202,7 +202,7 @@ def summarize_text_raw_text(to_summarize_texts, openai_api_key):
     )
 
     # Convert each text string to a Document object
-    to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
+    #to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
         
     # Summarize chunks here
     summarized_text = chain_summarize.run(to_summarize_text)
