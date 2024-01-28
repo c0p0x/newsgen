@@ -53,40 +53,43 @@ class Document:
         self.metadata = {"stop": []} 
 
 def summarize_text(to_summarize_texts, openai_api_key):
-  
     summarized_texts_titles_urls = []
 
     llm = OpenAI(openai_api_key=openai_api_key, temperature=0.8)
     chain_summarize = load_summarize_chain(llm, chain_type="map_reduce")
-    
-    # Define prompt that generates titles for summarized text
-    prompt = PromptTemplate(
-            input_variables=["text"], 
-            template="Write an appropriate, clickbaity news article title in Polish for less then approximatetly 150 characters for this text: {text}. Please summarize and translate into the article so I can use it in a newsletter - keep it less then 500 characters and keep it intresting. "
-        )
 
+    # Define prompt for generating titles
+    title_prompt = PromptTemplate(
+        input_variables=["text"], 
+        template="Write a clickbaity title in Polish for this text: {text}. Please prepare 3 versions in a list."
+    )
+
+    # Define prompt for summarizing text
+    text_prompt = PromptTemplate(
+        input_variables=["text"], 
+        template="Summarize the following text in Polish in a concise and informative manner: {text}"
+    )
 
     for to_summarize_text, url in to_summarize_texts:
-        # Convert each text string to a Document object
-        to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
-        if not to_summarize_text:  # Check if list is empty before running the chain
-          print(f"No text to summarize for URL: {url}")
-          continue
-        
-        # Summarize chunks here
-        summarized_text = chain_summarize.run(to_summarize_text)
+        if not to_summarize_text:
+            print(f"No text to summarize for URL: {url}")
+            continue
 
-        # prompt template that generates unique titles
-        chain_prompt = LLMChain(llm=llm, prompt=prompt)
-        clickbait_title = chain_prompt.run(summarized_text)
+        # Convert text string to a Document object for summarization
+        to_summarize_text_doc = Document('Dummy Title', to_summarize_text)
+
+        # Create chain for text summarization
+        chain_summarize_text = LLMChain(llm=llm, prompt=text_prompt)
+        summarized_text = chain_summarize_text.run([to_summarize_text_doc])
+
+        # Create chain for title generation
+        chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
+        clickbait_title = chain_prompt_title.run([summarized_text])
 
         summarized_texts_titles_urls.append((clickbait_title, summarized_text, url))
 
-
-
-        
-
     return summarized_texts_titles_urls
+
 
 
 
