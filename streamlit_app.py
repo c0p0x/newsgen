@@ -86,8 +86,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
 
 def main():
-    test = "siema"
-    test2 = "siema2"
     #frontend
     st.title('AutoNewsletter')
     st.markdown("## Please input your API keys")
