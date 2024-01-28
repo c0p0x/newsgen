@@ -95,9 +95,9 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     facts_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide a list of 10-15 key facts - ONLY KEY FACTS - such as statistics, numbers, prices etc from the {text}
+        template="""Please provide a list of 10-15 key facts in polish - ONLY KEY FACTS - such as statistics, numbers, prices etc from the {text}
         
-        LONG SUMMARY IN POLISH:
+        LIST OF KEY FACTS IN POLISH:
         """
     )
 
