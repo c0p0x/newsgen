@@ -87,7 +87,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide engaging summary of the following text in Polish, ensuring that it stays between 1000-1500 characters - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones. Additionally, present 3-4 distinct summarization options for me to choose from. Each option should capture the essence of the text in an interesting and straightforward manner. Remember, the summary must be in Polish. {text}
+        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on facts from article. Additionally, present 3-4 distinct summarization options for me to choose from. Remember, the summary must be in Polish. {text}
         
         LONG SUMMARY IN POLISH:
         """
