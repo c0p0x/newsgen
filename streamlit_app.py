@@ -56,7 +56,12 @@ def get_latest_results(query):
         article_texts.append(article.text)  # Add the text of the new unique article to the list
 
         st.write("debug - parsed_texts")
-        st.write(parsed_texts)
+        if parsed_texts and parsed_texts[0] and parsed_texts[0][0]:
+            desired_text = parsed_texts[0][0][0]
+            st.write(desired_text)
+        else:
+            st.write("Text not found")
+
 
     except ArticleException: 
         print(f"Failed to download and parse article: {query}")
