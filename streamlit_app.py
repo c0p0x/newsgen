@@ -123,7 +123,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
        # full article parser
         if to_summarize_texts and to_summarize_texts[0] and to_summarize_texts[0][0]:
             desired_text = to_summarize_texts[0][0][0]
-         #   st.write(desired_text)
+                st.write(desired_text)
         else:
              st.write("Text not found")
 
