@@ -136,7 +136,6 @@ def main():
     st.text(test2)
 
     if st.button('Submit'):
-        st.session_state.serpapi_key = serpapi_key
         st.session_state.user_query = user_query
 
         # Split the result of get_latest_results into two separate variables
