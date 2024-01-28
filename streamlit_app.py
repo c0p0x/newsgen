@@ -11,6 +11,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain import PromptTemplate, LLMChain, OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from langchain_openai import ChatOpenAI
 
 def get_openai_api_key():
     # Retrieve the API key from an environment variable
