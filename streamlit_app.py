@@ -17,6 +17,11 @@ from langchain.chat_models import ChatOpenAI
 
 model = -1
 
+def set_model(model):
+    os.environ['OPENAI_MODEL'] = model
+def get_model():
+    return os.getenv('OPENAI_MODEL')
+
 def get_openai_api_key():
     # Retrieve the API key from an environment variable
     return os.getenv('OPENAI_API_KEY')
@@ -79,7 +84,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = ChatOpenAI(model_name=model, openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
+    llm = ChatOpenAI(model_name=get_model, openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
@@ -160,13 +165,13 @@ def main():
     # Create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
-    selectbox = st.selectbox("GPT Model to be used", ("GPT 3.5 Turbo", "gpt-4-1106-preview", "gpt-4-0125-preview"))
+    selectbox = st.selectbox("GPT Model to be used", ("gpt-3.5-turbo-1106", "gpt-4-1106-preview", "gpt-4-0125-preview"))
     if selectbox == "gpt-3.5-turbo-1106":
-        model = "gpt-3.5-turbo-1106"
+        set_model(gpt-3.5-turbo-1106)
     elif selectbox == "gpt-4-1106-preview":
-        model = "gpt-4-1106-preview"
+        set_model(gpt-4-1106-preview)
     elif selectbox == "gpt-4-0125-preview":
-        model = "gpt-4-0125-preview"   
+        set_model(gpt-4-0125-preview)   
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
