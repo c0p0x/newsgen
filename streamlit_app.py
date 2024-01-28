@@ -38,7 +38,7 @@ def is_unique(new_article, articles):
     return True
 
 # Scrapes google search results
-def get_latest_results(query, api_key):
+def get_latest_results(query):
     params = {
         "q": query,
         "location": "United States",
@@ -49,13 +49,7 @@ def get_latest_results(query, api_key):
         "api_key": api_key,
     }
 
-    response = requests.get("https://serpapi.com/search", params)
-    results = json.loads(response.text)
-
-    # List of websites to exclude because you can't scrape them 
-    excluded_websites = ["ft.com", "cointelegraph.com", "cell.com", "futuretools.io"]
-
-    urls = [r["link"] for r in results["organic_results"] if not any(excluded_site in r["link"] for excluded_site in excluded_websites)][:40] #limit to first 40 results
+    urls = user_query
 
     parsed_texts = [] #list to store parsed text and corresponding URL
     article_texts = []  # list to store original article texts for similarity comparison
@@ -64,32 +58,28 @@ def get_latest_results(query, api_key):
     text_splitter = TokenTextSplitter(chunk_size=3000, chunk_overlap=200)
 
     #iterate over each URL 
-    for url in urls:
-        try:
-            #create an article object
-            article = Article(url)
+  
+    try:
+        #create an article object
+        article = Article(url)
 
-            #download the article 
-            article.download()
+        #download the article 
+        article.download()
 
-            #parse the article 
-            article.parse()
+        #parse the article 
+        article.parse()
 
-             # Check if the new article is unique
-            if not is_unique(article.text, article_texts):
-                continue  # If not unique, skip to the next article
-
-            #split text into chunks of 4k tokens 
-            splitted_texts = text_splitter.split_text(article.text)
-            if not splitted_texts:
-             print(article.text)
+        #split text into chunks of 4k tokens 
+        splitted_texts = text_splitter.split_text(article.text)
+        if not splitted_texts:
+            print(article.text)
               
-            #Append tuple of splitted text and URL to the list
-            parsed_texts.append((splitted_texts, url))
-            article_texts.append(article.text)  # Add the text of the new unique article to the list
+        #Append tuple of splitted text and URL to the list
+        parsed_texts.append((splitted_texts, url))
+        article_texts.append(article.text)  # Add the text of the new unique article to the list
 
-        except ArticleException: 
-            print(f"Failed to download and parse article: {url}")
+    except ArticleException: 
+        print(f"Failed to download and parse article: {url}")
 
     return parsed_texts
 
@@ -110,7 +100,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # Define prompt that generates titles for summarized text
     prompt = PromptTemplate(
             input_variables=["text"], 
-            template="Write an appropriate, clickbaity news article title in less than 70 characters for this text: {text}"
+            template="Write an appropriate, clickbaity news article title in less than 250 characters for this text: {text}"
         )
    
     for to_summarize_text, url in to_summarize_texts:
@@ -131,20 +121,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     return summarized_texts_titles_urls
 
-def send_email_mailgun(subject, body, to, from_email, mailgun_domain, mailgun_api_key):
-    response = requests.post(
-        f"https://api.mailgun.net/v3/{mailgun_domain}/messages",
-        auth=("api", mailgun_api_key),
-        data={"from": from_email,
-              "to": to,
-              "subject": subject,
-              "text": body})
-    
-    #in case of an error, what's the status
-    print("Status code:", response.status_code)
-    print("Response data:", response.text)
-    
-    return response
+
 
 def main():
     test = "siema"
@@ -157,7 +134,7 @@ def main():
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
     #create text input field for keyword 
-    user_query = st.text_input("Make me a newsletter about: ")
+    user_query = st.text_input("URL")
     
     #Summarized article to be translated 
     st.markdown("## Summarized article") 
@@ -172,7 +149,7 @@ def main():
         st.session_state.user_query = user_query
 
         # Split the result of get_latest_results into two separate variables
-        st.session_state.get_splitted_text = get_latest_results(user_query, serpapi_key)
+        st.session_state.get_splitted_text = get_latest_results(user_query)
         if not st.session_state.get_splitted_text:
             st.write("No results found.")
         st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
