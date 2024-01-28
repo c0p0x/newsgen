@@ -161,7 +161,7 @@ def main():
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
     selectbox = st.selectbox("GPT Model to be used", ("GPT 3.5 Turbo", "gpt-4-1106-preview", "gpt-4-0125-preview"))
-    if selectbox == "GPT 3.5 Turbo":
+    if selectbox == "gpt-3.5-turbo-1106":
         model = "gpt-3.5-turbo-1106"
     elif selectbox == "gpt-4-1106-preview":
         model = "gpt-4-1106-preview"
