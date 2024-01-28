@@ -122,7 +122,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
 def main():
     #frontend
-    st.title('AutoNewsletter')
+    st.title('AutoNewsletter-DEV')
 
     #create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
