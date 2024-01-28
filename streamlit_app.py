@@ -39,15 +39,6 @@ def is_unique(new_article, articles):
 
 # Scrapes google search results
 def get_latest_results(query):
-    params = {
-        "q": query,
-        "location": "United States",
-        "h1": "en",
-        "gl": "us",
-        "google_domain": "google.com",
-        "tbs": "qdr:d",     #Search for results from previous day 
-        "api_key": api_key,
-    }
 
     urls = user_query
 
