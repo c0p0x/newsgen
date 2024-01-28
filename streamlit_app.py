@@ -64,15 +64,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
             input_variables=["text"], 
             template="Write an appropriate, clickbaity news article title in Polish for less then approximatetly 150 characters for this text: {text}. Please summarize and translate into the article so I can use it in a newsletter - keep it less then 500 characters and keep it intresting. "
         )
-   # Define prompt that generates text
-    text_summarization_prompt = PromptTemplate(
-            input_variables=["text"], 
-            template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 200 words."
-    )
-
-    # Apply the Text Summarization Prompt: Use the new prompt template to summarize the text.
-    chain_summarize_text = LLMChain(llm=llm, prompt=text_summarization_prompt) 
-    summarized_text = chain_summarize_text.run(to_summarize_text)
 
 
     for to_summarize_text, url in to_summarize_texts:
