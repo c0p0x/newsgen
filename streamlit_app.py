@@ -177,14 +177,25 @@ def main():
     if selectbox == "Raw text":
         raw_text = st.text_area(label="Text", height=300, max_chars=10000)
         if st.button("Submit Raw Text"):
-            summarize(raw_text)
             if st.session_state.summary:
                 st.text_area(
                     label="Raw text summary",
                     value=st.session_state.summary,
                     height=100,
                 )
-                logging.info(f"Text: {raw_text}\nSummary: {st.session_state.summary}")
+            st.session_state.summarized_texts = summarize_text(raw_text, openai_api_key)
+            if st.session_state.get_splitted_text:
+                for title, short_article, full_article, facts, summarized_text, url in st.session_state.summarized_texts:
+                    st.markdown("## Headline") 
+                    st.write(title)
+                    st.markdown("## Summary") 
+                    st.write(f"❇️ {short_article}")
+                    st.markdown("## Key facts") 
+                    st.write(facts)
+                    st.markdown("## Full article") 
+                    st.write(full_article)
+                    st.markdown("\n\n")
+     
 
     elif selectbox == "URL":
         user_query = st.text_input(label="URL")
