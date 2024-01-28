@@ -55,11 +55,13 @@ def get_latest_results(query):
         parsed_texts.append((splitted_texts, query))
         article_texts.append(article.text)  # Add the text of the new unique article to the list
 
+        st.write("debug - parsed_texts")
+        st.write(parsed_texts)
+
     except ArticleException: 
         print(f"Failed to download and parse article: {query}")
 
-        st.write("debug - parsed_texts")
-        st.write(parsed_texts)
+       
 
     return parsed_texts
 
