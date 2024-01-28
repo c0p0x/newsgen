@@ -105,14 +105,6 @@ def main():
 
     #create text input field for keyword 
     user_query = st.text_input("URL")
-    
-    #Summarized article to be translated 
-    st.markdown("## Summarized article") 
-    st.text(test)
-
-
-    st.markdown("## OpenAI Translation")
-    st.text(test2)
 
     if st.button('Submit'):
         st.session_state.user_query = user_query
@@ -124,8 +116,10 @@ def main():
         st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
         
         for title, summarized_text, url in st.session_state.summarized_texts:
+          st.markdown("## Suggested titles") 
           st.title(title)
           # Add the emoji before the summarized text
+          st.markdown("## Suggested articles") 
           st.write(f"❇️ {summarized_text}")
           st.write(f"🔗 {url}")
           # Create an empty line for a gap
