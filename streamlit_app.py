@@ -56,7 +56,7 @@ def get_latest_results(query):
         article_texts.append(article.text)  # Add the text of the new unique article to the list
 
         st.write("debug - parsed_texts")
-        st.write(parsed_texts)
+        st.write(parsed_texts[0])
 
     except ArticleException: 
         print(f"Failed to download and parse article: {query}")
