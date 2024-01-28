@@ -20,6 +20,8 @@ def clear_openai_api_key():
     # Clear the API key from the environment for security
     os.environ['OPENAI_API_KEY'] = ''
 
+def set_openai_api_key(key):
+    s.environ['OPENAI_API_KEY'] = key
 
 def get_latest_results(query):
 
@@ -66,13 +68,7 @@ class Document:
 def summarize_text(to_summarize_texts, openai_api_key):
   
     summarized_texts_titles_urls = []
-    # Check if the API key is not found
-    if not openai_api_key:
-        raise ValueError("OpenAI API key not found. Please set the 'OPENAI_API_KEY' environment variable.")
-    
-    # Initialize OpenAI with the API key
-    openai.api_key = openai_api_key
-
+    set_openai_api_key(openai_api_key)
 
     llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.8)
     # Initialize the chain for summarization
@@ -148,7 +144,6 @@ def main():
           st.markdown("\n\n")
 
     return openai_api_key
-
 
     clear_openai_api_key()
 
