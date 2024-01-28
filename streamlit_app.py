@@ -169,7 +169,7 @@ def main():
                 )
 
     elif selectbox == "URL":
-        url = st.text_input(label="URL")
+        user_query = st.text_input(label="URL")
         #user_query = st.text_input("URL")
 
         st.session_state.user_query = user_query
