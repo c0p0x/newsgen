@@ -68,6 +68,8 @@ class Document:
 def summarize_text(to_summarize_texts, openai_api_key):
   
     summarized_texts_titles_urls = []
+
+    # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
     llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.8)
@@ -143,10 +145,10 @@ def main():
           # Create an empty line for a gap
           st.markdown("\n\n")
 
-    return openai_api_key
-
+    # wipe api key 
     clear_openai_api_key()
 
+    return openai_api_key
 
 
 if __name__ == "__main__":
