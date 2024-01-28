@@ -32,7 +32,7 @@ def get_latest_results(query):
     article_texts = []  # list to store original article texts for similarity comparison
 
     # Initialize the text_splitter before using it
-    text_splitter = TokenTextSplitter(chunk_size=8000, chunk_overlap=200)
+    text_splitter = TokenTextSplitter(chunk_size=2000, chunk_overlap=200)
 
     #iterate over each URL 
   
