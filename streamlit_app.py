@@ -171,7 +171,7 @@ def summarize_text_raw_text(raw_text, openai_api_key):
         input_variables=["text"], 
         template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Remember, the post must be in Polish. {text}
         
-        200 WORDS POST IN POLISH:
+        LONG SUMMARY IN POLISH
         """
     )
 
