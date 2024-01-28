@@ -55,14 +55,6 @@ def get_latest_results(query):
         parsed_texts.append((splitted_texts, query))
         article_texts.append(article.text)  # Add the text of the new unique article to the list
 
-        st.write("debug - parsed_texts")
-        if parsed_texts and parsed_texts[0] and parsed_texts[0][0]:
-            desired_text = parsed_texts[0][0][0]
-            st.write(desired_text)
-        else:
-            st.write("Text not found")
-
-
     except ArticleException: 
         print(f"Failed to download and parse article: {query}")
 
@@ -134,6 +126,12 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
         clickbait_title = chain_prompt_title.run(summarized_text)
 
+        st.write("debug - parsed_texts")
+        if to_summarize_texts and to_summarize_texts[0] and to_summarize_texts[0][0]:
+            desired_text = to_summarize_texts[0][0][0]
+            st.write(desired_text)
+        else:
+            st.write("Text not found")
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         article = chain_prompt_text.run(summarized_text)
 #todo
