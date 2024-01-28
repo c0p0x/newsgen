@@ -132,7 +132,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
         short_article = chain_prompt_text.run(summarized_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
-        st.write(desired_text)
         full_article = chain_prompt_text.run(desired_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
@@ -144,7 +143,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     return summarized_texts_titles_urls
 
-def display_url_results():
+def display_url_results(title, short_article, full_article, facts, summarized_text, url):
     if st.session_state.get_splitted_text:
         for title, short_article, full_article, facts, summarized_text, url in st.session_state.summarized_texts:
             st.markdown("## Headline") 
@@ -184,7 +183,7 @@ def main():
             st.session_state.user_query = user_query
             st.session_state.get_splitted_text = get_latest_results(user_query)
             st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
-            display_url_results()
+            display_url_results(title, short_article, full_article, facts, summarized_text, url)
 
     # Wipe API key 
     clear_openai_api_key()
