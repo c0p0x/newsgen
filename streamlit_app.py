@@ -84,7 +84,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = ChatOpenAI(model_name=get_model, openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
+    llm = ChatOpenAI(model_name=get_model(), openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
@@ -171,7 +171,7 @@ def main():
     elif selectbox == "gpt-4-1106-preview":
         set_model("gpt-4-1106-preview")
     elif selectbox == "gpt-4-0125-preview":
-        set_model("gpt-4-0125-preview")   
+        set_model("dgpt-4-0125-preview")   
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
