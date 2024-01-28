@@ -40,8 +40,7 @@ def is_unique(new_article, articles):
 # Scrapes google search results
 def get_latest_results(query):
 
-    urls = user_query
-
+    url = user_query
     parsed_texts = [] #list to store parsed text and corresponding URL
     article_texts = []  # list to store original article texts for similarity comparison
 
