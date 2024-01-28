@@ -123,7 +123,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
        # full article parser
         if to_summarize_texts and to_summarize_texts[0] and to_summarize_texts[0][0]:
             desired_text = to_summarize_texts[0][0][0]
-            st.write(desired_text)
+            #st.write(desired_text)
         else:
              st.write("Text not found")
 
@@ -132,6 +132,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         short_article = chain_prompt_text.run(summarized_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
+        st.write(desired_text)
         full_article = chain_prompt_text.run(desired_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
