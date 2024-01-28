@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 import json 
 import numpy as np
+import os
+import openai 
 
 from newspaper import Article, ArticleException
 from langchain.text_splitter import TokenTextSplitter
@@ -9,6 +11,15 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain import PromptTemplate, LLMChain, OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+def get_openai_api_key():
+    # Retrieve the API key from an environment variable
+    return os.getenv('OPENAI_API_KEY')
+
+def clear_openai_api_key():
+    # Clear the API key from the environment for security
+    os.environ['OPENAI_API_KEY'] = ''
+
 
 def get_latest_results(query):
 
@@ -106,6 +117,13 @@ def main():
     #create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
+ # Check if the API key is not found
+    if not openai_api_key:
+        raise ValueError("OpenAI API key not found. Please set the 'OPENAI_API_KEY' environment variable.")
+    
+    # Initialize OpenAI with the API key
+    openai.api_key = openai_api_key
+
     #create text input field for keyword 
     user_query = st.text_input("URL")
 
@@ -129,6 +147,11 @@ def main():
           st.markdown("\n\n")
 
     return openai_api_key
+
+
+    clear_openai_api_key()
+
+
 
 if __name__ == "__main__":
     main()
