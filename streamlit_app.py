@@ -4,6 +4,7 @@ import json
 import numpy as np
 import os
 import openai 
+import langchain_openai
 
 from newspaper import Article, ArticleException
 from langchain.text_splitter import TokenTextSplitter
