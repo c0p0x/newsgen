@@ -148,6 +148,7 @@ def send_email_mailgun(subject, body, to, from_email, mailgun_domain, mailgun_ap
 
 def main():
     test = "siema"
+    test2 = "siema2"
     #frontend
     st.title('AutoNewsletter')
     st.markdown("## Please input your API keys")
@@ -158,16 +159,13 @@ def main():
     #create text input field for keyword 
     user_query = st.text_input("Make me a newsletter about: ")
     
-    #you'll have to create a Mailgun account and if it's a free one you'll have to make a receiving mail as an authorized recipient 
-    st.markdown("## Info necessary for the MailGun to work") 
-
-    recipient_mail = st.text_input("Email To: ")
-    sending_mail = st.text_input("Email from: ") #email you used to create a MailGun account
-    mailgun_domain = st.text_input("Enter your mailgun Domain here: ")
-    mailgun_api = st.text_input("Enter your mailgun API key here: ")
-
-
+    #Summarized article to be translated 
+    st.markdown("## Summarized article") 
     st.text(test)
+
+
+    st.markdown("## OpenAI Translation")
+    st.text(test2)
 
     if st.button('Submit'):
         st.session_state.serpapi_key = serpapi_key
