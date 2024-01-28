@@ -117,10 +117,10 @@ def summarize_text(to_summarize_texts, openai_api_key):
         clickbait_title = chain_prompt_title.run(summarized_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
-        article = chain_prompt_text.run(summarized_text)
+        article = chain_prompt_text.run(to_summarize_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
-        facts = chain_prompt_text.run(summarized_text)
+        facts = chain_prompt_text.run(to_summarize_text)
 
         summarized_texts_titles_urls.append((clickbait_title, article, facts, summarized_text, url))
 
@@ -128,8 +128,18 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     return summarized_texts_titles_urls
 
-
-
+def results(title, article, facts, summarized_text):
+        for title, article, facts, summarized_text, url in st.session_state.summarized_texts:
+            st.markdown("## Suggested titles") 
+            st.write(title)
+            # Add the emoji before the summarized text
+            st.markdown("## Suggested articles") 
+            st.write(f"❇️ {article}")
+            st.markdown("## Key facts") 
+            st.write(facts)
+            st.write(f"🔗 {url}")
+            # Create an empty line for a gap
+            st.markdown("\n\n")
 
 def main():
     #frontend
@@ -163,11 +173,6 @@ def main():
         if url:
             user_query = st.text_input("URL")
 
-
-    #create text input field for keyword 
-    #user_query = st.text_input("URL")
-
-    if st.button('Submit'):
         st.session_state.user_query = user_query
 
         # Split the result of get_latest_results into two separate variables
