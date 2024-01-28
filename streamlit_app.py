@@ -143,8 +143,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     return summarized_texts_titles_urls
 
-def display_url_results(title, short_article, full_article, facts, summarized_text, url):
-
 
 def main():
     st.title('AutoNewsletter-DEV')
