@@ -105,6 +105,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         """
     )
 
+
     for to_summarize_text, url in to_summarize_texts:
         # Convert each text string to a Document object
         to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
@@ -131,7 +132,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         short_article = chain_prompt_text.run(summarized_text)
 
-        chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
+        chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         full_article = chain_prompt_text.run(desired_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
