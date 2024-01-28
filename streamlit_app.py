@@ -68,7 +68,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 750 characters and make sure its intresting. Do not be judgemental, make sure it's in Polish.Prepare list of 3 summarizations so I can choose the best."
+        template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 750 characters and make sure its intresting. Do not be judgemental, make sure it's in Polish. Prepare list of 3-4 summarization ideas so I can choose the best."
     )
 
     for to_summarize_text, url in to_summarize_texts:
