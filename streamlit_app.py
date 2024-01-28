@@ -115,12 +115,6 @@ def summarize_text(to_summarize_texts, openai_api_key):
         
         # Summarize chunks here
         summarized_text = chain_summarize.run(to_summarize_text)
-
-        st.write("DEBUG - to summarize")
-        st.write(to_summarize_text)
-
-        st.write("DEBUG - SUMMARIZED")
-        st.write(summarized_text)
         
         # prompt template that generates unique titles
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
