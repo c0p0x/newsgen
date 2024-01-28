@@ -58,7 +58,7 @@ def get_latest_results(query):
         st.write("debug - parsed_texts")
         if parsed_texts and parsed_texts[0] and parsed_texts[0][0]:
             desired_text = parsed_texts[0][0][0]
-            st.write(desired_text)
+            st.write(parsed_texts)
         else:
             st.write("Text not found")
 
@@ -188,14 +188,12 @@ def main():
 
     elif selectbox == "URL":
         user_query = st.text_input(label="URL")
-        #user_query = st.text_input("URL")
 
         st.session_state.user_query = user_query
 
         # Split the result of get_latest_results into two separate variables
         st.session_state.get_splitted_text = get_latest_results(user_query)
-        if not st.session_state.get_splitted_text:
-            st.write("No results found.")
+
         st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
         
         for title, article, facts, summarized_text, url in st.session_state.summarized_texts:
