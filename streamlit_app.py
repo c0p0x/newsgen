@@ -201,13 +201,8 @@ def summarize_text_raw_text(to_summarize_texts, openai_api_key):
         """
     )
 
-    
     # Convert each text string to a Document object
     to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
-        
-    if not to_summarize_text:  # Check if list is empty before running the chain
-        print(f"No text to summarize for URL: {url}")
-        continue
         
     # Summarize chunks here
     summarized_text = chain_summarize.run(to_summarize_text)
