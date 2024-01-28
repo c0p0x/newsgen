@@ -106,7 +106,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     )
     full_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Make it shorter - for an fact-drive comprehensive article in POLISH {text}
+        template="""Make a fact-driven article in Polish from the following text: {text}
         
         LONG ARTICLE IN POLISH WITH FACTS AND QUOTES:
         """
