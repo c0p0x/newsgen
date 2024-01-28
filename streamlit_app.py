@@ -108,7 +108,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         input_variables=["text"], 
         template="""Make it shorter - for an fact-drive comprehensive article {text}
         
-        LIST OF KEY FACTS IN POLISH:
+        LONG ARTICLE IN POLISH WITH FACTS AND QUOTES:
         """
     )
 
