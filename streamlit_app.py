@@ -21,7 +21,7 @@ def clear_openai_api_key():
     os.environ['OPENAI_API_KEY'] = ''
 
 def set_openai_api_key(key):
-    s.environ['OPENAI_API_KEY'] = key
+    os.environ['OPENAI_API_KEY'] = key
 
 def get_latest_results(query):
 
