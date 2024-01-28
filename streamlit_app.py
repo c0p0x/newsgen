@@ -169,7 +169,7 @@ def summarize_text_raw_text(raw_text, openai_api_key):
     )
 
     llm = ChatOpenAI(model_name=get_model(), openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
-
+    chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     summarized_raw_text = chain_summarize.run(raw_text)
 
     chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
