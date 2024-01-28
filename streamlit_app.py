@@ -114,15 +114,17 @@ def summarize_text(to_summarize_texts, openai_api_key):
         # Summarize chunks here
         summarized_text = chain_summarize.run(to_summarize_text)
 
+        print(summarized_text)
+        
         # prompt template that generates unique titles
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
         clickbait_title = chain_prompt_title.run(summarized_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
-        article = chain_prompt_text.run(to_summarize_text)
+        article = chain_prompt_text.run(summarized_text)
 #todo
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
-        facts = chain_prompt_text.run(to_summarize_text)
+        facts = chain_prompt_text.run(summarized_text)
 
         summarized_texts_titles_urls.append((clickbait_title, article, facts, summarized_text, url))
 
