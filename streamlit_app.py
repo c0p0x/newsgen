@@ -87,7 +87,15 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on facts from article. Additionally, present 3-4 distinct summarization options for me to choose from. Remember, the summary must be in Polish. {text}
+        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Additionally, present 3-4 distinct summarization options for me to choose from. Remember, the summary must be in Polish. {text}
+        
+        LONG SUMMARY IN POLISH:
+        """
+    )
+
+    facts_prompt = PromptTemplate(
+        input_variables=["text"], 
+        template="""Please provide a list of 10-15 key facts - ONLY KEY FACTS - such as statistics, numbers, prices etc from the {text}
         
         LONG SUMMARY IN POLISH:
         """
@@ -111,7 +119,10 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         article = chain_prompt_text.run(summarized_text)
 
-        summarized_texts_titles_urls.append((clickbait_title, article, summarized_text, url))
+        chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
+        facts = chain_prompt_text.run(summarized_text)
+
+        summarized_texts_titles_urls.append((clickbait_title, article, facts, summarized_text, url))
 
 
 
@@ -146,6 +157,8 @@ def main():
           # Add the emoji before the summarized text
           st.markdown("## Suggested articles") 
           st.write(f"❇️ {article}")
+          st.markdown("## Key facts") 
+          st.write(f"❇️ {facts}")
           st.write(f"🔗 {url}")
           # Create an empty line for a gap
           st.markdown("\n\n")
