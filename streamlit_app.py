@@ -74,19 +74,23 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = OpenAI(model_name="gpt-4-0125-preview", openai_api_key=openai_api_key, temperature=0.68)
+    llm = OpenAI(openai_api_key=openai_api_key, temperature=0.68)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
     # Define prompt that generates titles for summarized text
     title_prompt = PromptTemplate(
             input_variables=["text"], 
-            template="""Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 200 characters for this text: {text}. Make sure it is in Polish and less then 100chars. Prepare list of 5 titles so I can choose."""
+            template="""Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 200 characters for this text: {text}. Make sure it is in Polish and less then 100chars. Prepare list of 5 titles so I can choose. 
+            Nice titles:"""
         )
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide a concise and engaging summary of the following text in Polish, ensuring that it stays between 1000-1500 characters - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones. Additionally, present 3-4 distinct summarization options for me to choose from. Each option should capture the essence of the text in an interesting and straightforward manner. Remember, the summary must be in Polish. {text}"""
+        template="""Please provide a concise and engaging summary of the following text in Polish, ensuring that it stays between 1000-1500 characters - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones. Additionally, present 3-4 distinct summarization options for me to choose from. Each option should capture the essence of the text in an interesting and straightforward manner. Remember, the summary must be in Polish. {text}
+        
+        CONCISE SUMMARY:
+        """
     )
 
     for to_summarize_text, url in to_summarize_texts:
