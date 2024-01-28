@@ -58,7 +58,7 @@ def get_latest_results(query):
         st.write("debug - parsed_texts")
         if parsed_texts and parsed_texts[0] and parsed_texts[0][0]:
             desired_text = parsed_texts[0][0][0]
-            st.write(parsed_texts)
+            st.write(desired_text)
         else:
             st.write("Text not found")
 
