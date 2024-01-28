@@ -14,6 +14,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain.chat_models import ChatOpenAI
 
+
+model = -1
+
 def get_openai_api_key():
     # Retrieve the API key from an environment variable
     return os.getenv('OPENAI_API_KEY')
@@ -76,7 +79,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = ChatOpenAI(model_name='gpt-3.5-turbo-1106', openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
+    llm = ChatOpenAI(model_name=model, openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
@@ -157,6 +160,13 @@ def main():
     # Create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
+    selectbox = st.selectbox("GPT Model to be used", ("GPT 3.5 Turbo", "gpt-4-1106-preview", "gpt-4-0125-preview"))
+    if selectbox == "GPT 3.5 Turbo":
+        model = "gpt-3.5-turbo-1106"
+    elif selectbox == "gpt-4-1106-preview":
+        model = "gpt-4-1106-preview"
+    elif selectbox == "gpt-4-0125-preview":
+        model = "gpt-4-0125-preview"   
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
