@@ -4,7 +4,7 @@ import json
 import numpy as np
 import os
 import openai 
-import langchain_openai
+
 
 from newspaper import Article, ArticleException
 from langchain.text_splitter import TokenTextSplitter
@@ -12,7 +12,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain import PromptTemplate, LLMChain, OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from langchain_openai import ChatOpenAI
+
 
 def get_openai_api_key():
     # Retrieve the API key from an environment variable
@@ -74,7 +74,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # set api key in env variable 
     set_openai_api_key(openai_api_key)
 
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.68)
+    llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.68)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
