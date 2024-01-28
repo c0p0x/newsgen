@@ -158,8 +158,14 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
     return summarized_texts_titles_urls
 
+class Document:
+    def __init__(self, title, text):
+        self.title = title
+        self.page_content = text
 def summarize_text_raw_text(raw_text, openai_api_key):
   
+    document = Document('Dummy Title', raw_text)
+
     text_prompt = PromptTemplate(
         input_variables=["text"], 
         template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Remember, the post must be in Polish. {text}
@@ -170,7 +176,8 @@ def summarize_text_raw_text(raw_text, openai_api_key):
 
     llm = ChatOpenAI(model_name=get_model(), openai_api_key=openai_api_key, temperature=0.68, max_tokens = 3000)
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
-    summarized_raw_text = chain_summarize.run(raw_text)
+    
+    summarized_raw_text = chain_summarize.run([document])
 
     chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
     short_article = chain_prompt_text.run(summarized_raw_text)
