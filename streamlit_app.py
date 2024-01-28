@@ -138,7 +138,32 @@ def main():
     #create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
- 
+    selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
+
+    if selectbox == "Raw text":
+        raw_text = st.text_area(label="Text", height=300, max_chars=10000)
+        if raw_text:
+            summarize(raw_text)
+            if st.session_state.summary:
+                st.text_area(
+                    label="Raw text summary",
+                    value=st.session_state.summary,
+                    height=100,
+                )
+                logging.info(f"Text: {raw_text}\nSummary: {st.session_state.summary}")
+                st.button(
+                    label="Regenerate summary",
+                    type="secondary",
+                    on_click=summarize,
+                    args=[raw_text],
+                )
+
+    elif selectbox == "URL":
+        url = st.text_input(label="URL")
+        if url:
+            user_query = st.text_input("URL")
+
+
     #create text input field for keyword 
     user_query = st.text_input("URL")
 
@@ -158,7 +183,7 @@ def main():
           st.markdown("## Suggested articles") 
           st.write(f"❇️ {article}")
           st.markdown("## Key facts") 
-          st.write(f"❇️ {facts}")
+          st.write(facts)
           st.write(f"🔗 {url}")
           # Create an empty line for a gap
           st.markdown("\n\n")
