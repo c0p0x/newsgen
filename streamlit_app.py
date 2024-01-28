@@ -80,14 +80,16 @@ def summarize_text(to_summarize_texts, openai_api_key):
     
     # Define prompt that generates titles for summarized text
     title_prompt = PromptTemplate(
-            input_variables=["text"], 
-            template="""Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 200 characters for this text: {text}. Make sure it is in Polish and less then 100chars. Prepare list of 5 titles so I can choose. 
-            PROPOSED TITLES IN POLISH:"""
+        input_variables=["text"], 
+        template="""Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 200 characters for this text: {text}. Make sure it is in Polish and less then 100chars. Prepare list of 5 titles so I can choose. 
+        
+        PROPOSED TITLES IN POLISH:
+        """
         )
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Additionally, present 3-4 distinct summarization options for me to choose from. Remember, the summary must be in Polish. {text}
+        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Please present 3-4 distinct options for me to choose from. Remember, the post must be in Polish. {text}
         
         LONG SUMMARY IN POLISH:
         """
@@ -118,7 +120,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
         article = chain_prompt_text.run(to_summarize_text)
-
+#todo
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
         facts = chain_prompt_text.run(to_summarize_text)
 
