@@ -56,7 +56,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
   
     summarized_texts_titles_urls = []
 
-    llm = OpenAI(openai_api_key=openai_api_key, temperature=0.8)
+    llm = OpenAI(model_name="gpt-3.5-turbo-1106", openai_api_key=openai_api_key, temperature=0.8)
     # Initialize the chain for summarization
     chain_summarize = load_summarize_chain(llm, chain_type="stuff")
     
