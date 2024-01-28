@@ -68,7 +68,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 750 characters and make sure its intresting."
+        template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 750 characters and make sure its intresting. Do not be judgemental, make sure it's in Polish."
     )
 
     for to_summarize_text, url in to_summarize_texts:
@@ -83,10 +83,15 @@ def summarize_text(to_summarize_texts, openai_api_key):
         summarized_text = chain_summarize.run(to_summarize_text)
 
         # prompt template that generates unique titles
-        chain_prompt = LLMChain(llm=llm, prompt=title_prompt)
-        clickbait_title = chain_prompt.run(summarized_text)
+        chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
+        clickbait_title = chain_prompt_title.run(summarized_text)
 
-        summarized_texts_titles_urls.append((clickbait_title, summarized_text, url))
+        chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
+        article = chain_prompt_text.run(summarized_text)
+
+        summarized_texts_titles_urls.append((clickbait_title, article, summarized_text, url))
+
+
 
     return summarized_texts_titles_urls
 
@@ -118,7 +123,7 @@ def main():
           st.title(title)
           # Add the emoji before the summarized text
           st.markdown("## Suggested articles") 
-          st.write(f"❇️ {summarized_text}")
+          st.write(f"❇️ {article}")
           st.write(f"🔗 {url}")
           # Create an empty line for a gap
           st.markdown("\n\n")
