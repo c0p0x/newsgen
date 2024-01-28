@@ -125,7 +125,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
             desired_text = to_summarize_texts[0][0][0]
          #   st.write(desired_text)
         else:
-          #  st.write("Text not found")
+             st.write("Text not found")
 
         
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
