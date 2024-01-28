@@ -120,7 +120,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
         clickbait_title = chain_prompt_title.run(summarized_text)
 
-       # st.write("debug - parsed_texts")
+       # full article parser
         if to_summarize_texts and to_summarize_texts[0] and to_summarize_texts[0][0]:
             desired_text = to_summarize_texts[0][0][0]
          #   st.write(desired_text)
@@ -129,42 +129,45 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
         
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
-        article = chain_prompt_text.run(desired_text)
+        short_article = chain_prompt_text.run(summarized_text_text)
+
+        chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
+        full_article = chain_prompt_text.run(desired_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
         facts = chain_prompt_text.run(desired_text)
 
-        summarized_texts_titles_urls.append((clickbait_title, article, facts, summarized_text, url))
+        summarized_texts_titles_urls.append((clickbait_title, short_article, full_article, facts, summarized_text, url))
 
 
 
     return summarized_texts_titles_urls
 
-def results(title, article, facts, summarized_text):
-        for title, article, facts, summarized_text, url in st.session_state.summarized_texts:
-            st.markdown("## Suggested titles") 
+def display_url_results():
+    if st.session_state.get_splitted_text:
+        for title, short_article, full_article, facts, summarized_text, url in st.session_state.summarized_texts:
+            st.markdown("## Headline") 
             st.write(title)
-            # Add the emoji before the summarized text
-            st.markdown("## Suggested articles") 
-            st.write(f"❇️ {article}")
+            st.markdown("## Summary") 
+            st.write(f"❇️ {short_article}")
             st.markdown("## Key facts") 
             st.write(facts)
+            st.markdown("## Full article") 
+            st.write(f"❇️ {full_article}")
             st.write(f"🔗 {url}")
-            # Create an empty line for a gap
             st.markdown("\n\n")
 
 def main():
-    #frontend
     st.title('AutoNewsletter-DEV')
 
-    #create text input field for API keys 
+    # Create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
         raw_text = st.text_area(label="Text", height=300, max_chars=10000)
-        if raw_text:
+        if st.button("Submit Raw Text"):
             summarize(raw_text)
             if st.session_state.summary:
                 st.text_area(
@@ -173,39 +176,17 @@ def main():
                     height=100,
                 )
                 logging.info(f"Text: {raw_text}\nSummary: {st.session_state.summary}")
-                st.button(
-                    label="Regenerate summary",
-                    type="secondary",
-                    on_click=summarize,
-                    args=[raw_text],
-                )
 
     elif selectbox == "URL":
         user_query = st.text_input(label="URL")
+        if st.button("Submit URL"):
+            st.session_state.user_query = user_query
+            st.session_state.get_splitted_text = get_latest_results(user_query)
+            st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
+            display_url_results()
 
-        st.session_state.user_query = user_query
-
-        # Split the result of get_latest_results into two separate variables
-        st.session_state.get_splitted_text = get_latest_results(user_query)
-
-        st.session_state.summarized_texts = summarize_text(st.session_state.get_splitted_text, openai_api_key)
-        
-        for title, article, facts, summarized_text, url in st.session_state.summarized_texts:
-          st.markdown("## Suggested titles") 
-          st.write(title)
-          # Add the emoji before the summarized text
-          st.markdown("## Suggested articles") 
-          st.write(f"❇️ {article}")
-          st.markdown("## Key facts") 
-          st.write(facts)
-          st.write(f"🔗 {url}")
-          # Create an empty line for a gap
-          st.markdown("\n\n")
-
-    # wipe api key 
+    # Wipe API key 
     clear_openai_api_key()
-
-    return openai_api_key
 
 
 if __name__ == "__main__":
