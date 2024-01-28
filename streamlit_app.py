@@ -129,7 +129,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
 
         
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
-        short_article = chain_prompt_text.run(summarized_text_text)
+        short_article = chain_prompt_text.run(summarized_text)
 
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
         full_article = chain_prompt_text.run(desired_text)
