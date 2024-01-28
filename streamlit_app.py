@@ -89,7 +89,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
         input_variables=["text"], 
-        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Please present 3-4 distinct options for me to choose from. Remember, the post must be in Polish. {text}
+        template="""Please provide engaging post of the following text in Polish, ensuring that it is 220 words approximate - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones focusing on and quoting facts from article. Remember, the post must be in Polish. {text}
         
         LONG SUMMARY IN POLISH:
         """
@@ -114,7 +114,11 @@ def summarize_text(to_summarize_texts, openai_api_key):
         # Summarize chunks here
         summarized_text = chain_summarize.run(to_summarize_text)
 
-        print(summarized_text)
+        st.write("DEBUG - to summarize")
+        st.write(to_summarize_text)
+
+        st.write("DEBUG - SUMMARIZED")
+        st.write(summarized_text)
         
         # prompt template that generates unique titles
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
