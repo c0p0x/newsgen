@@ -147,12 +147,12 @@ def send_email_mailgun(subject, body, to, from_email, mailgun_domain, mailgun_ap
     return response
 
 def main():
+    test = "siema"
     #frontend
     st.title('AutoNewsletter')
     st.markdown("## Please input your API keys")
 
     #create text input field for API keys 
-    serpapi_key = st.text_input("Insert your SerpAPI key here: ", type="password")
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
     #create text input field for keyword 
@@ -165,6 +165,9 @@ def main():
     sending_mail = st.text_input("Email from: ") #email you used to create a MailGun account
     mailgun_domain = st.text_input("Enter your mailgun Domain here: ")
     mailgun_api = st.text_input("Enter your mailgun API key here: ")
+
+
+    st.text(test)
 
     if st.button('Submit'):
         st.session_state.serpapi_key = serpapi_key
