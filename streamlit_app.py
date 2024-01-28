@@ -120,17 +120,19 @@ def summarize_text(to_summarize_texts, openai_api_key):
         chain_prompt_title = LLMChain(llm=llm, prompt=title_prompt)
         clickbait_title = chain_prompt_title.run(summarized_text)
 
-        st.write("debug - parsed_texts")
+       # st.write("debug - parsed_texts")
         if to_summarize_texts and to_summarize_texts[0] and to_summarize_texts[0][0]:
             desired_text = to_summarize_texts[0][0][0]
-            st.write(desired_text)
+         #   st.write(desired_text)
         else:
-            st.write("Text not found")
+          #  st.write("Text not found")
+
+        
         chain_prompt_text = LLMChain(llm=llm, prompt=text_prompt)
-        article = chain_prompt_text.run(summarized_text)
-#todo
+        article = chain_prompt_text.run(desired_text)
+
         chain_prompt_text = LLMChain(llm=llm, prompt=facts_prompt)
-        facts = chain_prompt_text.run(summarized_text)
+        facts = chain_prompt_text.run(desired_text)
 
         summarized_texts_titles_urls.append((clickbait_title, article, facts, summarized_text, url))
 
