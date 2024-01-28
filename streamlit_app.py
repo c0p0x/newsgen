@@ -179,7 +179,7 @@ def main():
                     st.markdown("## Key facts") 
                     st.write(facts)
                     st.markdown("## Full article") 
-                    st.write(f"❇️ {full_article}")
+                    st.write(full_article)
                     st.write(f"🔗 {url}")
                     st.markdown("\n\n")
 
