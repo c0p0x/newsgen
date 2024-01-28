@@ -1,0 +1,9 @@
+streamlit
+requests
+numpy
+newspaper3k
+scikit-learn
+langchain
+mailgun
+tiktoken
+openai
