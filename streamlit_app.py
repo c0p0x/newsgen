@@ -62,9 +62,19 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # Define prompt that generates titles for summarized text
     prompt = PromptTemplate(
             input_variables=["text"], 
-            template="Write an appropriate, clickbaity news article title in Polish for less then approximatetly 150 characters for this text: {text}. Please prepare 3 versions in a list so I can choose. Remember they have to be in Polish"
+            template="Write an appropriate, clickbaity news article title in Polish for less then approximatetly 150 characters for this text: {text}. Please summarize and translate into the article so I can use it in a newsletter - keep it less then 500 characters and keep it intresting. "
         )
-   
+   # Define prompt that generates text
+    text_summarization_prompt = PromptTemplate(
+            input_variables=["text"], 
+            template="Summarize the following text in Polish in a concise and informative manner: {text}. Keep it less then 200 words."
+    )
+
+    # Apply the Text Summarization Prompt: Use the new prompt template to summarize the text.
+    chain_summarize_text = LLMChain(llm=llm, prompt=text_summarization_prompt) 
+    summarized_text = chain_summarize_text.run(to_summarize_text)
+
+
     for to_summarize_text, url in to_summarize_texts:
         # Convert each text string to a Document object
         to_summarize_text = [Document('Dummy Title', text) for text in to_summarize_text]
@@ -80,6 +90,10 @@ def summarize_text(to_summarize_texts, openai_api_key):
         clickbait_title = chain_prompt.run(summarized_text)
 
         summarized_texts_titles_urls.append((clickbait_title, summarized_text, url))
+
+
+
+        
 
     return summarized_texts_titles_urls
 
