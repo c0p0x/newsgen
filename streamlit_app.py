@@ -120,7 +120,7 @@ def main():
         
         for title, article, summarized_text, url in st.session_state.summarized_texts:
           st.markdown("## Suggested titles") 
-          st.title(title)
+          st.write(title)
           # Add the emoji before the summarized text
           st.markdown("## Suggested articles") 
           st.write(f"❇️ {article}")
