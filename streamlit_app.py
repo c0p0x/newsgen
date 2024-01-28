@@ -58,6 +58,9 @@ def get_latest_results(query):
     except ArticleException: 
         print(f"Failed to download and parse article: {query}")
 
+        st.write("debug - parsed_texts")
+        st.write(parsed_texts)
+
     return parsed_texts
 
 #required by chain.run()
