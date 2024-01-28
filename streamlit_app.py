@@ -177,12 +177,6 @@ def main():
     if selectbox == "Raw text":
         raw_text = st.text_area(label="Text", height=300, max_chars=10000)
         if st.button("Submit Raw Text"):
-            if st.session_state.summary:
-                st.text_area(
-                    label="Raw text summary",
-                    value=st.session_state.summary,
-                    height=100,
-                )
             st.session_state.summarized_texts = summarize_text(raw_text, openai_api_key)
             if st.session_state.get_splitted_text:
                 for title, short_article, full_article, facts, summarized_text, url in st.session_state.summarized_texts:
