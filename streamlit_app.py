@@ -171,7 +171,7 @@ def main():
     elif selectbox == "gpt-4-1106-preview":
         set_model("gpt-4-1106-preview")
     elif selectbox == "gpt-4-0125-preview":
-        set_model("dgpt-4-0125-preview")   
+        set_model("gpt-4-0125-preview")   
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
