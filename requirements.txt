@@ -7,3 +7,4 @@ langchain
 mailgun
 tiktoken
 openai
+langchain_openai
