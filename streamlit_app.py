@@ -63,7 +63,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
     # Define prompt that generates titles for summarized text
     title_prompt = PromptTemplate(
             input_variables=["text"], 
-            template="Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 150 characters for this text: {text}."
+            template="Write an appropriate, clickbaity, but not judgemental news article title in Polish for less then approximatetly 150 characters for this text: {text}. Make sure it is in Polish."
         )
     # define prompt that generates text translated 
     text_prompt = PromptTemplate(
