@@ -89,7 +89,7 @@ def summarize_text(to_summarize_texts, openai_api_key):
         input_variables=["text"], 
         template="""Please provide a concise and engaging summary of the following text in Polish, ensuring that it stays between 1000-1500 characters - SUPER IMPORTANT. The summary should be informative, neutral, and devoid of any judgmental tones. Additionally, present 3-4 distinct summarization options for me to choose from. Each option should capture the essence of the text in an interesting and straightforward manner. Remember, the summary must be in Polish. {text}
         
-        CONCISE SUMMARY:
+        CONCISE SUMMARY IN POLISH:
         """
     )
 
