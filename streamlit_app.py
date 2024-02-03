@@ -186,7 +186,7 @@ def summarize_text_raw_text(raw_text, openai_api_key):
     return short_article
 
 def main():
-    st.title('AutoNewsletter-DEV')
+    st.title('AutoNewsletter-PROD')
 
     # Create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
