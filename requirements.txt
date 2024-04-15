@@ -7,3 +7,4 @@ langchain
 mailgun
 tiktoken
 openai
+lxml==4.9.1
