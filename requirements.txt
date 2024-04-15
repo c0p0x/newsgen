@@ -7,4 +7,4 @@ langchain
 mailgun
 tiktoken
 openai
-lxml
+lxml[html_clean]
