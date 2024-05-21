@@ -8,3 +8,4 @@ mailgun
 tiktoken
 openai
 lxml[html_clean]
+langchain-community
