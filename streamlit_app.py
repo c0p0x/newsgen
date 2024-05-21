@@ -195,10 +195,10 @@ def main():
     selectbox = st.selectbox("GPT Model to be used", ("gpt-3.5-turbo-1106", "gpt-4-1106-preview", "gpt-4-0125-preview"))
     if selectbox == "gpt-3.5-turbo-1106":
         set_model("gpt-3.5-turbo-1106")
-    elif selectbox == "gpt-4-1106-preview":
-        set_model("gpt-4-1106-preview")
-    elif selectbox == "gpt-4-0125-preview":
-        set_model("gpt-4-0125-preview")   
+    elif selectbox == "gpt-4o":
+        set_model("gpt-4o")
+    elif selectbox == "gpt-4-turbo":
+        set_model("gpt-4-turbo-preview")   
     selectbox = st.selectbox("Raw text or URL source", ("URL", "Raw text"))
 
     if selectbox == "Raw text":
