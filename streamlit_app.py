@@ -192,7 +192,7 @@ def main():
     # Create text input field for API keys 
     openai_api_key = st.text_input("Insert your OpenAI api key: ", type="password")
 
-    selectbox = st.selectbox("GPT Model to be used", ("gpt-3.5-turbo-1106", "gpt-4-1106-preview", "gpt-4-0125-preview"))
+    selectbox = st.selectbox("GPT Model to be used", ("gpt-4o", "gpt-3.5-turbo-1106", "gpt-4-turbo"))
     if selectbox == "gpt-4o":
         set_model("gpt-4o")
     elif selectbox == "gpt-3.5-turbo-1106":
